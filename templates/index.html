@@ -2,32 +2,31 @@
 <html>
 
 <head>
-	<meta charset='utf-8' />
-	<title>Tinkerbelle</title>
-
-	<meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
-	<!--     <link rel="stylesheet" type="text/css" href="style.css" media="screen"/> -->
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/dark.css">
-	<link rel="stylesheet" href="static/style.css">
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.1.1/socket.io.js"></script>
-
-</head>
+    <meta charset='utf-8' />
+    <title>Tinkerbelle</title>
+    
+    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+<!--     <link rel="stylesheet" type="text/css" href="style.css" media="screen"/> -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/dark.css">
+    <link rel="stylesheet" href="static/style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.1.1/socket.io.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/d3-color@3"></script>
+	<script src="https://cdn.jsdelivr.net/npm/d3-interpolate@3"></script>
+	<script src="https://cdn.jsdelivr.net/npm/d3-ease@3"></script>
+	<script type="module" crossorigin src="static/tinkerButton.js"></script>
 
 <body>
-	<div id='user'>
-		<button id='control'>Jane Wren</button>
-		<button id='light'>Tinkerbelle</button>
-	</div>
-	<div id='controlPanel'>
-		<div class="pickr"></div>
-		<br>
-		<label> Audio
-			<input type="text" id='audioIn'>
-			<button id='play'>▶️</button>
-			<button id='pause'>■</button>
+<div id='user'>
+	<button  id='control'>Wizard</button>
+	<button id='light'>Tinkerbelle</button>
+</div>
+<div id='controlPanel'>
+	<tinker-button letter="Q" color_code="#DDFD22" duration="4000" sound="meow" easing="Linear"></tinker-button>
+    <tinker-button letter="W" color_code="#1828B5" duration="4000" sound="bark" easing="Back"></tinker-button>
+    <tinker-button letter="E" color_code="#D00BB0" duration="1000" sound="waterfall" easing="BounceInOut"></tinker-button>
+	<tinker-button letter='F' sound_only="true" duration="5000" sound="puppy"></tinker-button>
 
-		</label>
-	</div>
+</div>
 
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@simonwep/pickr/dist/themes/classic.min.css" />
 	<!-- 'monolith' theme -->

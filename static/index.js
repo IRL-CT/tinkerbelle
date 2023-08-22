@@ -1,17 +1,91 @@
 const control = document.getElementById('control');
 const light = document.getElementById('light');
-const play = document.getElementById('play');
-const pause = document.getElementById('pause');
-const audioIn = document.getElementById('audioIn');
-const audio = new Audio();
-let pickr;
 
 const socket = io();
+const interpolate = d3.interpolateLab;
+const eases = Object.fromEntries(Object.entries(d3).filter((a) => a.toString().startsWith('ease')).map(([a, b]) => [a.substring(4), b]))
+const audio = new Audio();
+
+audio.loop = true;
+let current;
+let animateID;
+let audioID;
+let keys;
+window.onload  = () => {
+  keys = [...document.querySelectorAll('tinker-button')].reduce((obj, btn) => {
+    obj[btn.letter.toLowerCase()] = btn
+    return obj;
+  }, {})
+}
+
+function playSound(soundLink, duration) {
+  if (soundLink) {
+    if (!audio.paused) {
+      audio.pause();
+    }
+    audio.src = soundLink;
+    audio.play();
+    setTimeout(() =>  audio.pause() , duration);
+  }
+  return;
+}
+
+const runKey = (key) => {
+  const { color: { hex }, duration, easing, sound_only, soundLink } = key
+  const ease = eases[easing]
+  if (sound_only) {
+    playSound(soundLink, duration);
+    socket.emit('audio', {soundLink, duration})
+    return
+  }
+  if(soundLink){
+    playSound(soundLink, duration);
+    socket.emit('audio', {soundLink, duration})
+  }
+
+  if (animateID) {
+    cancelAnimationFrame(animateID)
+  }
+  const startTime = performance.now();
+
+  function animate(now) {
+    let background = document.body.style.backgroundColor || getComputedStyle(document.body)
+      .getPropertyValue('--background-body');
+    const timeSinceStart = (now - startTime);
+
+    // l goes from 0 to 1;
+    const l = ease(Math.min(timeSinceStart / duration, 1));
+    current = interpolate(background, hex)(l)
+    document.body.style.backgroundColor = current
+    socket.emit('hex', current)
+    if (l < 1) {
+      animateID = requestAnimationFrame(animate);
+    }
+  }
+  animateID = requestAnimationFrame(animate);
+}
+
+
+
+document.onkeydown = (event) => {
+  if (event.isComposing || event.target.tagName === 'TINKER-BUTTON') {
+    return;
+  }
+  keys[event.key] ? runKey(keys[event.key]) : undefined;
+}
+
+
 
 socket.on('connect', () => {
+<<<<<<< Updated upstream
   socket.on('hex', (val) => { document.body.style.backgroundColor = val })
   socket.on('audio', (val) => { getSound(encodeURI(val)); })
   socket.on('pauseAudio', (val) => { audio.pause(); })
+=======
+  socket.on('hex', (val) => {document.body.style.backgroundColor = val})
+  socket.on('audio', (val) => {playSound(val.soundLink, val.duration);})
+  socket.on('pauseAudio', (val) => {audio.pause();})
+>>>>>>> Stashed changes
   socket.onAny((event, ...args) => {
     console.log(event, args);
   });
@@ -29,44 +103,6 @@ control.onclick = () => {
   // make buttons and controls visible
   document.getElementById('user').classList.remove('fadeOut');
   document.getElementById('controlPanel').style.opacity = 0.6;
-  if (!pickr) {
-    // create our color picker. You can change the swatches that appear at the bottom
-    pickr = Pickr.create({
-      el: '.pickr',
-      theme: 'classic',
-      showAlways: true,
-      swatches: [
-        'rgba(255, 255, 255, 1)',
-        'rgba(244, 67, 54, 1)',
-        'rgba(233, 30, 99, 1)',
-        'rgba(156, 39, 176, 1)',
-        'rgba(103, 58, 183, 1)',
-        'rgba(63, 81, 181, 1)',
-        'rgba(33, 150, 243, 1)',
-        'rgba(3, 169, 244, 1)',
-        'rgba(0, 188, 212, 1)',
-        'rgba(0, 150, 136, 1)',
-        'rgba(76, 175, 80, 1)',
-        'rgba(139, 195, 74, 1)',
-        'rgba(205, 220, 57, 1)',
-        'rgba(255, 235, 59, 1)',
-        'rgba(255, 193, 7, 1)',
-        'rgba(0, 0, 0, 1)',
-      ],
-      components: {
-        preview: false,
-        opacity: false,
-        hue: true,
-      },
-    });
-
-    pickr.on('change', (e) => {
-      // when pickr color value is changed change background and send message on ws to change background
-      const hexCode = e.toHEXA().toString();
-      document.body.style.backgroundColor = hexCode;
-      socket.emit('hex', hexCode)
-    });
-  }
 };
 
 light.onclick = () => {
@@ -77,17 +113,11 @@ light.onclick = () => {
   // in light mode make it full screen and fade buttons
   document.documentElement.requestFullscreen();
   document.getElementById('user').classList.add('fadeOut');
-  // if you were previously in control mode remove color picker and hide controls
-  if (pickr) {
-    // this is annoying because of the pickr package
-    pickr.destroyAndRemove();
-    document.getElementById('controlPanel').append(Object.assign(document.createElement('div'), { className: 'pickr' }));
-    pickr = undefined;
-  }
   document.getElementById('controlPanel').style.opacity = 0;
 };
 
 
+<<<<<<< Updated upstream
 const getSound = (query, loop = false, random = false) => {
   const url = `https://freesound.org/apiv2/search/text/?query=${query}+"&fields=name,previews&token=U5slaNIqr6ofmMMG2rbwJ19mInmhvCJIryn2JX89&format=json`;
   fetch(url)
@@ -112,3 +142,5 @@ pause.onclick = () => {
   audio.pause();
 };
 audioIn.onkeyup = (e) => { if (e.keyCode === 13) { play.click(); } };
+=======
+>>>>>>> Stashed changes
