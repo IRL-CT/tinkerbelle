@@ -77,15 +77,9 @@ document.onkeydown = (event) => {
 
 
 socket.on('connect', () => {
-<<<<<<< Updated upstream
-  socket.on('hex', (val) => { document.body.style.backgroundColor = val })
-  socket.on('audio', (val) => { getSound(encodeURI(val)); })
-  socket.on('pauseAudio', (val) => { audio.pause(); })
-=======
   socket.on('hex', (val) => {document.body.style.backgroundColor = val})
   socket.on('audio', (val) => {playSound(val.soundLink, val.duration);})
   socket.on('pauseAudio', (val) => {audio.pause();})
->>>>>>> Stashed changes
   socket.onAny((event, ...args) => {
     console.log(event, args);
   });
@@ -117,30 +111,3 @@ light.onclick = () => {
 };
 
 
-<<<<<<< Updated upstream
-const getSound = (query, loop = false, random = false) => {
-  const url = `https://freesound.org/apiv2/search/text/?query=${query}+"&fields=name,previews&token=U5slaNIqr6ofmMMG2rbwJ19mInmhvCJIryn2JX89&format=json`;
-  fetch(url)
-    .then((response) => response.clone().text())
-    .then((data) => {
-      console.log(data);
-      data = JSON.parse(data);
-      if (data.results.length >= 1) var src = random ? choice(data.results).previews['preview-hq-mp3'] : data.results[0].previews['preview-hq-mp3'];
-      audio.src = src;
-      audio.play();
-      console.log(src);
-    })
-    .catch((error) => console.log(error));
-};
-
-play.onclick = () => {
-  socket.emit('audio', audioIn.value)
-  getSound(encodeURI(audioIn.value));
-};
-pause.onclick = () => {
-  socket.emit('pauseAudio', audioIn.value)
-  audio.pause();
-};
-audioIn.onkeyup = (e) => { if (e.keyCode === 13) { play.click(); } };
-=======
->>>>>>> Stashed changes
