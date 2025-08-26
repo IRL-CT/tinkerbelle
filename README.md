@@ -1,4 +1,6 @@
-# Tinkerbelle
+# Tinkerbelle (New UI Branch)
+
+> **Note**: You are on the `newnewUI` branch which includes both Python (Flask) and Node.js implementations, plus an updated user interface. For the standard version, switch to the `main` branch.
 
 Tinkerbelle is a simple tool for prototyping interaction by using a phone as a web-controlled smart light. 
 
@@ -6,10 +8,35 @@ You can control the smart light (your phone) via the web interface or using any 
 
 <img src="/imgs/Snapshot.PNG" alt="system diagram" width="300"/>
 
-## Installation
+## Branch Information
+
+This repository has multiple versions:
+- **`main` branch**: Standard Python Flask implementation
+- **`newnewUI` branch**: Enhanced version with both Python and Node.js options plus improved UI
+
+To switch between branches:
+```bash
+# Switch to the standard version
+git checkout main
+
+# Switch to this enhanced version
+git checkout newnewUI
+```
+
+## Installation Options
+
+This branch provides two server implementations:
+
+## Installation Options
+
+This branch provides two server implementations:
+
+### Option 1: Python Flask Server (Recommended for beginners)
 
 This project uses a python web-server called Flask. 
 You should have [Python3 installed](https://realpython.com/installing-python/).
+
+**Python Version Compatibility**: This project works with Python 3.7 and newer. If you encounter installation issues with specific package versions, try using a more recent version of Python (3.9+ recommended).
 
 <!--To install flask in a virtual environment:
 ```
@@ -22,23 +49,52 @@ $ source bin/activate
 Now clone this repo to download the python code that serves up the Flask page by typing the following commands in your laptop/computer terminal.
 (You can check out more details [here](https://docs.github.com/en/github/creating-cloning-and-archiving-repositories/cloning-a-repository-from-github/cloning-a-repository) for how to clone github repository to a local machine.)
 
-```
+```bash
 $ cd (set the directory you want to clone the repo to)
 $ git clone https://github.com/FAR-Lab/tinkerbelle.git
 $ cd tinkerbelle
+$ git checkout newnewUI  # Switch to this enhanced branch
 $ pip3 install -r requirements.txt
 ```
 
+### Option 2: Node.js Server (Alternative implementation)
+
+If you prefer Node.js or want to try the alternative implementation:
+
+1. Make sure you have [Node.js installed](https://nodejs.org/)
+2. Install dependencies:
+```bash
+$ npm install
+```
+
+### Troubleshooting Installation
+If you encounter issues installing the Python requirements:
+1. **For older Python versions (3.7-3.8)**: Some packages may need specific versions. Try: `pip3 install Flask==2.2.2 Flask-SocketIO==5.3.0`
+2. **For newer Python versions (3.11+)**: The flexible requirements should work. If not, try installing packages individually: `pip3 install Flask Flask-SocketIO`
+3. **General issues**: Consider using a virtual environment or updating pip: `pip3 install --upgrade pip`
+
 ## Getting started
+
+### Using Python Flask Server
 Run the tinker.py code, which serves up a webpage
 
-```
+```bash
 $ python3 tinker.py
  * Restarting with stat
 access at http://localhost:5000
  * Debugger is active!
  * Debugger PIN: ***-***-***
 ```
+
+### Using Node.js Server (Alternative)
+Run the Node.js server:
+
+```bash
+$ npm start
+# or for development with auto-restart:
+$ npm run dev
+```
+
 If your get the following error message: `ModuleNotFoundError: No module named 'flask_socketio'`, try typing the following command to install the module:
 `$ pip3 install flask-socketio`.
 
