@@ -1,12 +1,22 @@
-# Tinkerbelle (New UI Branch)
+# Tinkerbelle - Enhanced UI with Keyboard Controls
 
-> **Note**: You are on the `newnewUI` branch which includes both Python (Flask) and Node.js implementations, plus an updated user interface. For the standard version, switch to the `main` branch.
+> **✨ This is the enhanced `newnewUI` branch** featuring keyboard shortcuts, advanced sound options, customizable colors, and smooth easing transitions!
+
+<img src="/imgs/KeyboardControl.png" alt="Keyboard Control Interface" width="400"/>
 
 Tinkerbelle is a simple tool for prototyping interaction by using a phone as a web-controlled smart light. 
 
-You can control the smart light (your phone) via the web interface or using any software that can connect to a websocket. In the Python folder, you will find a simple example that demonstrates a color gradient.
+This enhanced version allows you to control the smart light using **keyboard shortcuts** and provides additional features for defining sounds, colors, and easing transitions. You can also control the smart light via the web interface or using any software that can connect to a websocket.
 
 <img src="/imgs/Snapshot.PNG" alt="system diagram" width="300"/>
+
+## Enhanced Features in this Branch
+
+- 🎹 **Keyboard Shortcuts**: Control colors and effects directly from your keyboard
+- 🎵 **Advanced Sound Options**: Define and trigger custom sounds
+- 🎨 **Customizable Colors**: Enhanced color palette and controls  
+- ✨ **Easing Transitions**: Smooth animations between color changes
+- 🖥️ **Dual Server Options**: Choose between Python Flask or Node.js implementations
 
 ## Branch Information
 
